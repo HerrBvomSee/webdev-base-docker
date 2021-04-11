@@ -1,0 +1,23 @@
+version: '3.8'
+
+# Services
+services:
+
+  # Nginx Service
+  nginx:
+    image: nginx:1.19
+    ports:
+      - 80:80
+    volumes:
+      - ./htdocs:/var/www/php
+      - ./.docker/nginx/conf.d:/etc/nginx/conf.d
+    environment:
+      - NGINX_HOST=objektiv.local
+    depends_on:
+      - php
+
+  php:
+    image: phpdockerio/php56-fpm
+    working_dir: /var/www/php
+    volumes:
+      - ./htdocs:/var/www/php
